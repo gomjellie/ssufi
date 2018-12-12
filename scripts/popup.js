@@ -84,4 +84,14 @@ $(function() {
       "ssu_password": $(".password").val()
     });
   });
+
+  chrome.storage.sync.get(['ssu_username', 'ssu_password'], function(data) {
+    if (data.ssu_username && data.ssu_password) {
+      $(".student_id").val(data.ssu_username);
+      $(".password").val(data.ssu_password);
+      $(".student_id").focus();
+    } else {
+      $(".student_id").focus();
+    }
+  });
 });
