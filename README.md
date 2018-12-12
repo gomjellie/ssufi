@@ -1,6 +1,10 @@
 # ssufi
 ssu wifi cracker
 
+## install
+
+[크롬스토어](https://chrome.google.com/webstore/detail/ssufi/ebgfflahnnmjblcideohjocpckgegggj?hl=ko)에서 설치
+
 ## ssufi 는 뭔가요?
 
 숭실대 와이파이(captive network)를 자동으로 잡아주는 크롬 플러그인 입니다.
