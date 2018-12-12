@@ -29,7 +29,7 @@ $(document).ready(function () {
       clickLogin();
     } else {
       $('<div class="modal">\
-				<h3 style="margin-bottom:10px;">Starsucks</h3>\
+				<h3 style="margin-bottom:10px;">SsuFi</h3>\
 				<p>학번과 비밀번호는 앞으로 크롬계정에 저장되며 SsuFi 플러그인을 통해 자동으로 로그인됩니다\
 				</div>').appendTo('body').modal({zIndex: 1000});
       $("img[alt='입렵한 정보를 이용하여 로그인합니다.']").on('click', function() {
