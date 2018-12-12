@@ -1,0 +1,223 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+    <style>
+        @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800);
+
+        *, *::before, *::after {
+            padding: 0;
+            margin: 0;
+            border: 0;
+            box-sizing: border-box;
+            background: transparent;
+        }
+
+        *:focus {
+            outline: 0;
+        }
+
+        svg:not(:root) {
+            overflow: hidden;
+        }
+
+        html, body {
+            height: 35em;
+            width: 24em;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background: #8DD9F7;
+        }
+
+        .wrapper {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            -webkit-transform: translate(-50%, -50%);
+            -moz-transform: translate(-50%, -50%);
+            -ms-transform: translate(-50%, -50%);
+            -o-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+            background: #fff;
+            display: table;
+            height: 540px;
+            width: 320px;
+            box-shadow: 0 0 12px 3px rgba(0, 0, 0, .12);
+        }
+
+        .wrapper > div {
+            display: table-cell;
+            vertical-align: middle;
+            padding: 0 40px;
+        }
+
+        h1 {
+            font-size: 25px;
+            font-weight: 400;
+        }
+
+        p {
+            color: #CACACA;
+            font-size: 12px;
+            margin: 10px 0 40px 0;
+        }
+
+        a {
+            color: #EA4C89;
+            text-decoration: none;
+        }
+
+        fieldset {
+            position: relative;
+            margin-bottom: 50px;
+        }
+
+        input {
+            color: #46505F;
+            font-weight: 600;
+            width: 100%;
+            font-size: 16px;
+            padding: 12px 46px 12px 0;
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        input[type="submit"] {
+            font-weight: 400;
+            color: #36AEE4;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 0;
+            width: auto;
+        }
+
+        input::-webkit-input-placeholder {
+            color: #CACACA;
+            font-weight: 400;
+        }
+
+        ::-moz-placeholder {
+            color: #CACACA;
+            font-weight: 400;
+        }
+
+        :-ms-input-placeholder {
+            color: #CACACA;
+            font-weight: 400;
+            opacity: 1;
+        }
+
+        ::-webkit-input-placeholder {
+            color: #CACACA;
+            font-weight: 400;
+        }
+
+        ::placeholder {
+            color: #CACACA;
+            font-weight: 400;
+        }
+
+        input::-ms-clear {
+            display: none;
+        }
+
+        input::-ms-reveal {
+            display: none;
+        }
+
+        input::-webkit-search-decoration,
+        input::-webkit-search-cancel-button,
+        input::-webkit-search-results-button,
+        input::-webkit-search-results-decoration {
+            display: none;
+        }
+
+        fieldset #way {
+            position: absolute;
+            bottom: 0;
+            /*z-index: -1;*/
+            pointer-events: none;
+            height: 46px;
+            width: 267px;
+        }
+
+        .cd-block {
+            position: relative;
+        }
+
+        .cd-block svg {
+            position: absolute;
+            top: 0;
+            right: 0;
+            height: 46px;
+            width: 46px;
+        }
+
+        path {
+            stroke-width: 2;
+            stroke: #36AEE4;
+        }
+
+        #show_password {
+            cursor: pointer;
+            visibility: hidden;
+            -webkit-transition-delay: .3s;
+            -o-transition-delay: .3s;
+            transition-delay: .3s;
+        }
+
+        .cd-block.typing #show_password {
+            visibility: visible;
+            -webkit-transition-delay: 0s;
+            -o-transition-delay: 0s;
+            transition-delay: 0s;
+        }
+    </style>
+    <script type="text/javascript" src="lib/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="scripts/popup.js"></script>
+</head>
+<body>
+<div class="wrapper">
+    <div>
+        <h1>SsuWifi 로그인 정보변경</h1>
+        <p>학번과 비밀번호를 변경하면 앞으로 변경된 정보로 자동 로그인됩니다.</p>
+        <form>
+            <fieldset>
+                <div class="cd-block">
+                    <input class="student_id" name="student_id" type="username" placeholder="학번">
+                    <svg version="1.1" id="validate" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 46 46">
+                        <path id="confirm" fill="none" stroke="#36AEE4" stroke-width="2" stroke-miterlimit="10"
+                              d="M14.7,23.3l6.6,6.4l10-13.4"/>
+                    </svg>
+                </div>
+
+                <div class="cd-block">
+                    <input class="password" name="user-passoword" type="password" placeholder="Passoword">
+                    <svg version="1.1" id="show_password" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 46 46">
+                        <path id="contour" fill="none" stroke="#36AEE4" stroke-width="2" stroke-miterlimit="10" d="M12.1,23.4c0,0,10.5-16,21.8,0
+                C34,23.4,24.7,39.3,12.1,23.4z"/>
+                        <path id="circle" fill="none" stroke="#36AEE4" stroke-width="2" stroke-miterlimit="10" d="M23.1,20L23.1,20
+                c1.8,0,3.3,1.5,3.3,3.3v0c0,1.8-1.5,3.3-3.3,3.3h0c-1.8,0-3.3-1.5-3.3-3.3v0C19.7,21.5,21.2,20,23.1,20z"/>
+                        <path id="line" fill="none" stroke="#36AEE4" stroke-width="2" stroke-miterlimit="10"
+                              d="M13.9,33.2c0,0,15.7-17.2,18.3-19.6"/>
+                    </svg>
+                </div>
+
+                <svg version="1.1" id="way" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 267 46">
+                    <path id="path" fill="none" stroke="#36AEE4" stroke-width="2" stroke-miterlimit="10" d="M0,1h239.1c0,0,26.9-1.6,26.9,22
+              c0,23.8-26.9,22-26.9,22H0"/>
+                </svg>
+
+            </fieldset>
+            <input type="submit" value="Enter" class="submit">
+        </form>
+
+
+        <p style="position: absolute; padding-top: 25px">이 폼은 <a href="https://codepen.io/pdesacastro/pen/ONWKVm" target="_blank">Pedro de Sá의 코드펜</a>을 참고해서 만들었음을
+            밝힙니다.</p>
+
+    </div>
+</div>
+</body>
+</html>

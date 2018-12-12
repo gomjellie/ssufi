@@ -1,0 +1,307 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta name="viewport" content="initial-scale=1.0;" />
+    <title>숭실대학교</title>
+    <style type="text/css">
+        #root{
+            width:100%;
+            text-align:center;
+        }
+        body{text-align:center;}
+        #contents{
+            margin:0 auto;
+            margin-top:100;
+            width:400px;
+            text-align:left;
+        }
+    </style>
+    <link href="/resources/css/main.css" rel="stylesheet" type="text/css">
+    <meta http-equiv="Content-type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <script type="text/javascript" src="/resources/jquery/jquery-1.10.2.js"></script>
+    <script type="text/javascript" src="/resources/jqwidgets/jqxcore.js"></script>
+    <script type="text/javascript" src="/resources/jqwidgets/jqxresponse.js"></script>
+    <script type="text/javascript" src="/resources/jquery/jquery.form.js"></script>
+    <script src="jquery.cookie.js"></script>
+
+    <script language="javascript" type="text/javascript">
+      $(document).ready(function () {
+
+        //var agent = window.navigator.userAgent.toLowerCase();
+        //var edge = agent.indexOf("edge/12.0");
+
+        //쿠키값 가져오기 호출
+        var cookie_user_id = getLogin();
+        /**
+         * 쿠키값이 존재하면 id에 쿠키에서 가져온 id를 할당한 뒤
+         * 체크박스를 체크상태로 변경
+         */
+        if(cookie_user_id != "") {
+          $("#user_id").val(cookie_user_id);
+          $("#check_save_id").attr("checked", true);
+        }
+
+        chgBg(1);
+
+        eventlist();
+      });
+
+      function eventlist(){
+        // 아이디 저장 체크시
+        $("#check_save_id").on("click", function(){
+          var _this = this;
+          var isRemember;
+
+          if($(_this).is(":checked")) {
+            isRemember = confirm("이 PC에 로그인 정보를 저장하시겠습니까? PC방등의 공공장소에서는 개인정보가 유출될 수 있으니 주의해주십시오.");
+
+            if(!isRemember)
+              $(_this).attr("checked", false);
+          }
+        });
+      }
+
+      //쿠키값을 가져온다
+      function getLogin() {
+        // userid 쿠키에서 id 값을 가져온다.
+        var cook = document.cookie + ";";
+        var idx = cook.indexOf("userid", 0);
+        var val = "";
+
+        if(idx != -1) {
+          cook = cook.substring(idx, cook.length);
+          begin = cook.indexOf("=", 0) + 1;
+          end = cook.indexOf(";", begin);
+          val = unescape(cook.substring(begin, end));
+        }
+        return val;
+      }
+      function chkcookie(){
+        if($("#check_save_id").is(":checked")){ // 저장 체크시
+          saveLogin($("#user_id").val());
+        }else{ // 체크 해제시는 공백
+          saveLogin("");
+        }
+      }
+      function saveLogin(id) {
+        if(id != "") {
+          // userid 쿠키에 id 값을 7일간 저장
+          setSave("userid", id, 7);
+        }else{
+          // userid 쿠키 삭제
+          setSave("userid", id, -1);
+        }
+      }
+      function setSave(name, value, expiredays) {
+        var today = new Date();
+        today.setDate( today.getDate() + expiredays );
+        document.cookie = name + "=" + escape( value ) + "; path=/; expires=" + today.toGMTString() + ";"
+      }
+
+
+      //내부인 외부인 radio버튼에 따라 보이는 TEXT 문구 변경
+      function chgBg(obj) {
+        if (document.form.division[0].checked == true) {
+          document.getElementById('user_id_text').innerHTML = "아이디(학번/직번)";
+          //document.getElementById('user_password_text').innerHTML = "비밀번호";
+          document.getElementById('text1').style.display='block'
+          document.getElementById('text4').style.display='block'
+          document.getElementById('text5').style.display='block'
+          document.getElementById('text3').style.display='none'
+        } else if (document.form.division[1].checked == true) {
+          document.getElementById('user_id_text').innerHTML = "아이디(E-Mail)";
+          //document.getElementById('user_password_text').innerHTML = "비밀번호";
+          document.getElementById('text1').style.display='none'
+          document.getElementById('text4').style.display='none'
+          document.getElementById('text5').style.display='none'
+          document.getElementById('text3').style.display='block'
+        }
+      }
+
+      function entercheck() {
+        if (event.keyCode == 13) {
+          checkdata();
+        }
+      }
+
+      function checkdata() {
+
+        // 쿠키에 ID 저장
+        chkcookie();
+
+        if (document.form.user_id.value == "" || document.form.user_id.value.length == 0) {
+          alert('아이디를 입력하세요.');
+          document.form.user_id.focus();
+          return;
+        }
+
+        if (document.form.password.value == "" || document.form.password.length == 0) {
+          alert('비밀번호를 입력하세요');
+          document.form.password.focus();
+          return;
+        }
+        document.form.action = "/login/loginCheck.do";
+        document.form.submit();
+      }
+
+      function idQuery(){
+        var url = "/login/ssuidQueryPage.do";
+        var popupX = (window.screen.width / 2) - (500 / 2);
+        var popupY= (window.screen.height /2) - (300 / 2);
+        var myWin = window.open(url, 'pbml_win0', 'toolbar=no,location=no,directories=no, status=no,menubar=no,resizable=no,scrollbars=no,width=500,height=300,top='+popupX+',left='+popupY+',screenX='+popupX+',screenY='+popupY);
+      }
+
+      function temporary() {
+        myForm = document.form;
+        myForm.action="/login/ssutempLoginPage.do";
+        myForm.submit();
+        return;
+      }
+
+      function userReq() {
+        myForm = document.form;
+        myForm.action="/login/ssuuserReqPage.do";
+        myForm.submit();
+        return;
+      }
+
+      function guestReq() {
+        myForm = document.form;
+        myForm.action="/login/ssuguestReqPage.do";
+        myForm.submit();
+        return;
+      }
+    </script>
+</head>
+<body>
+<div id='root'>
+    <div id='contents'>
+        <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+            <form name="form" method="post">
+                <input type="hidden" id="ipaddress" name="ipaddress" value="010.014.007.118" />
+                <input type="hidden" id="macaddress" name="macaddress" value="60:03:08:A2:B7:34" />
+                <input type="hidden" id="vlantag" name="vlantag" value="0061" />
+                <input type="hidden" id="sysid" name="sysid" value="0009" />
+                <input type="hidden" id="fwurl" name="fwurl" value="www.gstatic.com/generate_204" />
+                <input type="hidden" id="edge" name="edge" value="" />
+                <input type="hidden" name="mobile" value="M"/>
+                <tr>
+                    <td height="80" align="center" valign="middle">
+                        <table border="0" cellpadding="0" cellspacing="0" align="center">
+                            <tr>
+                                <td valign="middle">
+                                    <img alt="" src="/resources/images/ssu.jpg" width="460" height="80" border="0"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <table width="400" border="0" cellpadding="0" cellspacing="0" align="center">
+                            <tr>
+                                <td align="left">
+                                    네트워크 사용을 위한 로그인 화면입니다.
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <table width="400" border="0" cellpadding="0" cellspacing="0" align="center">
+                            <tr>
+                                <td align="left">
+                                    &nbsp;
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <table width="400" border="0" cellpadding="0" cellspacing="0" align="center">
+                            <tr>
+                                <td align="right">
+                                    <img alt="" src="/resources/images/btn_search.jpg" width="57" height="26" onclick="javascript:idQuery();" style="cursor:hand;">
+                                    <img alt="" src="/resources/images/btn_temppw2.jpg" width="82" height="26" onclick="javascript:temporary();" style="cursor:hand;">
+                                    <!--             <img src="/resources/images/spacer.gif" width="3" height="26" border="0" alt="">
+                                                <img src="/resources/images/inner_req.gif" width="90" height="26" onclick="javascript:userReq();" style="cursor:hand;" alt=""/>
+                                                <img src="/resources/images/spacer.gif" width="3" height="26" border="0" alt="">
+                                                <img src="/resources/images/guest_req.jpg" width="80" height="26" onclick="javascript:guestReq();" style="cursor:hand;" alt="">
+                                     -->          </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <table width="400" border="1" cellpadding="0" cellspacing="0" align="center">
+                            <tr>
+                                <td align="center" bgcolor="#d0ffd0">
+                                    <input type="radio" name="division" value="inner" checked="checked" onclick="javascript:chgBg(1);"/>내부인
+                                    <input type="radio" name="division" value="outer" onclick="javascript:chgBg(2);"/>외부인
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center" bgcolor="#d0ffd0">
+                                    <table width="" border="0" cellpadding="0" cellspacing="0" class="black1" align="center">
+                                        <tr>
+                                            <td rowspan="2">
+                                                <img src="/resources/images/lock.png" width="38" height="43" border="0" style="cursor:pointer" alt="">
+                                            </td>
+                                            <td width="140" height="23" align="left" valign="middle">
+                                                <div id="user_id_text" style="float:left;">아이디(학번/직번)</div>  <!-- 숭실대의 경우 학번 / 직번 으로 표기-->
+                                            </td>
+                                            <td width="146" height="23" align="left" valign="middle">
+                                                <input name="user_id" class="form1" type="text" maxlength="" style="width:137px;">
+                                            </td>
+                                            <td rowspan="2">
+                                                <img src="/resources/images/btn_login_1.jpg" width="65" height="41" border="0" style="cursor:pointer" onclick="JavaScript:checkdata();" alt="입렵한 정보를 이용하여 로그인합니다.">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="66" height="23" align="left" valign="top">
+                                                <div id="passwd" style="float:left">Password</div>
+                                            </td>
+                                            <td width="146" height="23" align="left" valign="top">
+                                                <input name="password" class="form1" type="password" maxlength="" style="width:137px;" title="비밀번호 입력" onkeypress="JavaScript:entercheck();">
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <table width="400" border="0" cellpadding="0" cellspacing="0" align="center">
+                            <tr>
+                                <td class="text8">
+                                    <!--             ※ 2016년 입학생 아이디는 학번이며, 패스워드는 생년월일 8자리입니다.(예 19XXXXXX)<br />
+                                                아이디가 없으신 분은 숭실인을 클릭하여 신청해 주시기 바랍니다. -->
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <table width="400" border="0" cellpadding="0" cellspacing="0" align="center">
+                            <tr>
+                                <td height="25" align="center" valign="middle"><font color="#666666">
+                                    지식정보처 정보화팀 네트워크 유지보수실 TEL 820-0980,0979
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </form>
+        </table>
+    </div>
+</div>
+</body>
+</html>
