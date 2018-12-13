@@ -25,3 +25,8 @@ Captive Network Assistant.app 을 꺼줘야한다.
 
 3. sudo mv /System/Library/CoreServices/Captive\ Network\ Assistant.app /System/Library/CoreServices/.Captive\ Network\ Assistant.app 
 
+## windows 에서 따로 해줘야 하는작업
+
+기본 브라우저를 크롬으로 변경하는게 좋습니다.
+
+[windows 10 기본브라우저 변경법](https://support.microsoft.com/ko-kr/help/4028606/windows-10-change-your-default-browser)을 참고해서 변경하세요
