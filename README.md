@@ -23,7 +23,5 @@ Captive Network Assistant.app 을 꺼줘야한다.
 
 2. /etc/hosts 에 127.0.0.1 captive.apple.com를 추가한다 (captive.apple.com 에서 응답이 돌아오지 않으면 captive network assistant 어플이 켜지는데 captive.apple.com를 로컬호스트로 돌려버리는 꼼수)
 
-3. captive network assistant 어플 이름 바꾸기
-
-sudo mv /System/Library/CoreServices/Captive\ Network\ Assistant.app /System/Library/CoreServices/.Captive\ Network\ Assistant.app 
+3. sudo mv /System/Library/CoreServices/Captive\ Network\ Assistant.app /System/Library/CoreServices/.Captive\ Network\ Assistant.app 
 
