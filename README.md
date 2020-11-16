@@ -13,7 +13,7 @@ ssu wifi cracker
 
 auth.soongsil.ac.kr 페이지가 뜨면 저장된 정보로 로그인한다.
 
-## mac os 에서 따로 해줘야 하는작업
+## mac os 에서 따로 해줘야 하는작업 (은 엘 캐피타 이후 안해도 됩니다)
 
 Captive Network Assistant.app 을 꺼줘야한다.
 
